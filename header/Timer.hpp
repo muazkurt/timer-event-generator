@@ -1,8 +1,5 @@
 #ifndef TIMER_H
 	#define TIMER_H
-	#define AGE_MILISEC	10000
-	#define MAX_AGE 	255
-	#define MIN_AGE 	1
 	#include "ITimer.hpp"
 	#include "Guard.hpp"
 	#include <queue>
@@ -23,7 +20,6 @@
 			struct Event
 			{
 				String			name;
-				int 			_age;
 				Timepoint		next_work;
 				Millisecs		period;
 				TPredicate 		predicate;
@@ -32,8 +28,7 @@
 					const Timepoint & tp = CLOCK::now(), 
 					const Millisecs & ms = Millisecs::min(), 
 					const TPredicate & pd = nullptr, 
-					const TTimerCallback & cb = nullptr,
-					int age = MAX_AGE);
+					const TTimerCallback & cb = nullptr);
 				Event(Event & other);
 				Event(const Event & other);
 				const Event & operator = (const Event & other);
@@ -46,13 +41,10 @@
 			ThreadGuard timer;
 			std::mutex queueSaver;
 			std::priority_queue<Event>	eventQueue;
-			std::chrono::nanoseconds	age_timer;
 			static bool item_exist;
-			void age_once();
 			void enqueueEvent(const MuazKurt::Timer::Event &);
 		};
 		bool operator <(const Timer::Event & a, const Timer::Event & b);
-
 		void theJob(Timer * const timerObject);
 	} // namespace MuazKurt
 #endif
