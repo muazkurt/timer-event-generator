@@ -8,15 +8,7 @@ project(Muaz_Kurt_Timer)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/executable)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/libraries)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/archive)
+include_directories(header)
 
-include_directories(Timer/header)
-find_package (Threads)
-add_subdirectory(Timer)
-
-add_executable(executable main.cpp)
-
-target_link_libraries(executable timer ${CMAKE_THREAD_LIBS_INIT})
+add_library(timer SHARED source/Timer.cpp source/Event.cpp source/ThreadGuard.cpp source/FileGuard.cpp)
 
